@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 
 const db = require("./models");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
+// const cors = require("cors");
 // const User = require("./Models/userModel.js");
 const app = express();
 
@@ -14,12 +15,14 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// app.use(cors());
+
 app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
 
-//GET Book  routes
-app.get("/", (req, res) => {
+//GET Book  route
+app.get("/books", (req, res) => {
     db.Book.find()
     .then(dbBook => {
       res.json(dbBook);
@@ -29,54 +32,35 @@ app.get("/", (req, res) => {
     });
 });
 
-// app.post("/", (req, res)=>{
-//     db.User.create(req.body).then(dbUser => {
-//         res.json(dbUser);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-// })
+//POST book route
+app.post("/books", (req, res)=>{
+    db.Book.create(req.body).then(dbBook => {
+        res.json(dbBook);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+})
 
-// //Vendor routes
-// app.get("/vendor", (req, res) => {
-//     db.Vendor.find()
-//     .then(dbVendor => {
-//       res.json(dbVendor);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+//DELETE route
+app.delete("/api/books/:id", (req, res) => {
+    db.Book.deleteOne(
+      
+      {_id: req.params.id}
 
-// app.post("/newvendor", (req, res)=>{
-//     db.Vendor.create(req.body).then(dbVendor => {
-//         res.json(dbVendor);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-// })
+    )
+    .then(dbBook => {
+      res.json(dbBook);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
-// //Review routes
-// app.get("/review", (req, res) => {
-//     db.Review.find()
-//     .then(dbReview => {
-//       res.json(dbReview);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-// app.post("/newreview", (req, res)=>{
-//     db.Review.create(req.body).then(dbReview => {
-//         res.json(dbReview);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-// })
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontEnd/build"));
+}
 
 
 app.listen(PORT, () => {
