@@ -7,20 +7,23 @@ import Form from "../../components/Searchcontainer";
 
 class Searched extends Component {
 
-searchForBooks = async (e, query) => {
+  state = {
+    books: []
+  }
+
+searchForBooks = async (e) => {
   const bookTitle = e.target.elements.bookTitle.value;
   e.preventDefault();
-  const API_CALL =  await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+  const API_CALL =  await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}`);
 
   const data = await API_CALL.json();
-  console.log(data);
+  this.setState({ books: data.items });
+  console.log(this.state.books);
 
-  // console.log(bookTitle);
+  console.log(data.items[0].volumeInfo.imageLinks.thumbnail);
+  // console.log(data.items[0].volumeInfo.authors);
+  // console.log(data.items[0].volumeInfo.description);
 }
-
-
-
-
 
   // create a search bar and also work with handleInputChange on the search bar
   // put the state in here for the search bar, pass it down as a prop to the Searchcontainer component
@@ -41,11 +44,17 @@ searchForBooks = async (e, query) => {
   //     res.json(handleFormSubmit)
   //   });
   // };
+
 render (){
   return (
     <div>
       <Container />
       <Form searchForBooks={this.searchForBooks} />
+{/*       
+      {this.state.books.map((book) =>{
+         return <p>{book.items.volumeInfo.title}</p> 
+      } )}  */}
+      
     </div>
   );
 }
