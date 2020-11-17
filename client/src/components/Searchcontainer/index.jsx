@@ -1,25 +1,31 @@
 import React from "react";
-import "./style.css";
+// import "./style.css";
 
-export default function Searchcontainer() {
-  return (
-    <div>
-      <br/>
-      
-      <br/>
-      <div className="container-lg paper">
-        <div className="row">
-          <h1>Book Search</h1>
-        </div>
-        <input type="text"></input>
+ const Form = props => (
+  // return (
+    // <div>
+    
+      // {/* <div className="container-lg paper"> */}
+        // {/* <div className="row"> */}
+          // <h1>Book Search</h1>
+        // {/* </div> */}
+
+
+      <form onSubmit={props.searchForBooks}>
+        <input type="text" name="bookTitle"></input>
         <button>Search</button>
-      </div>
-      <br/>
+      </form>
+      // {/* </div> */}
+      // {
+        /* <br/>
       <div className="container-lg paper">
         <div className="row">
           <h1>Results</h1>
         </div>
       </div>
-    </div>
-  );
-}
+    // </div> */
+  // }
+  // );
+ )
+
+export default Form;

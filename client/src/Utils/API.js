@@ -4,9 +4,9 @@ const API = {
   getBooks: function () {
     return axios.get("/books");
   },
-  searchForBooks: function (query) {
-    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
-  },
+  // searchForBooks: function (query) {
+    // return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+  // },
 
   deleteBooks: function (){
     return axios.delete("/api/books/:id")
