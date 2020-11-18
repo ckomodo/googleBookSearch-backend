@@ -18,9 +18,13 @@ searchForBooks = async (e) => {
 
   const data = await API_CALL.json();
   this.setState({ books: data.items });
-  console.log(this.state.books);
+  console.log("this.state.books", this.state.books);
 
-  console.log(data.items[0].volumeInfo.imageLinks.thumbnail);
+  console.log("data.items: ", data.items[0]);
+
+  console.log("data.items[0].volumeInfo.imageLinks.thumbnail", data.items[0].volumeInfo.imageLinks.thumbnail);
+
+  // console.log(data.items.volumeInfo.imageLinks.thumbnail);
   // console.log(data.items[0].volumeInfo.authors);
   // console.log(data.items[0].volumeInfo.description);
 }
@@ -50,9 +54,9 @@ render (){
     <div>
       <Container />
       <Form searchForBooks={this.searchForBooks} />
-{/*       
-      {this.state.books.map((book) =>{
-         return <p>{book.items.volumeInfo.title}</p> 
+     
+      {/* {this.state.books.map((book) =>{
+         return <p>{book.items.volumeInfo.authors}</p> 
       } )}  */}
       
     </div>
