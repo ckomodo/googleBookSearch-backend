@@ -13,6 +13,11 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
   useNewUrlParser: true,
 });
@@ -49,11 +54,6 @@ app.delete("/api/books/:id", (req, res) => {
       res.json(err);
     });
 });
-
-// Serve up static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
